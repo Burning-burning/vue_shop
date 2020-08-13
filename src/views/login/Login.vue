@@ -50,7 +50,6 @@ export default {
         if (valid) {
           const { username, password } = this.loginFormModel
           const res = await login(username, password)
-          console.log(res)
           if (res.meta.status === 200) {
             this.$message.success(res.meta.msg)
             window.sessionStorage.setItem('token', res.data.token)
