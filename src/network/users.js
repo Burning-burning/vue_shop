@@ -32,3 +32,8 @@ export const deleteUser = (id) => request({
   url: `users/${id}`,
   method: 'delete'
 })
+export const allotUserRole = (id, rid) => request({
+  url: `users/${id}/role`,
+  method: 'put',
+  data: { rid }
+})

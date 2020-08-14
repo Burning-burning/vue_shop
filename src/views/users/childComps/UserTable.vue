@@ -44,7 +44,7 @@
             <el-button type="primary" icon="el-icon-edit" size="mini" @click ="update(scope.row.id)"></el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" @click = "deleteUser(scope.row.id)"></el-button>
              <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">
-               <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+               <el-button type="warning" icon="el-icon-setting" size="mini" @click = "allotRoles(scope.row)"></el-button>
             </el-tooltip>
 
         </template>
@@ -83,15 +83,19 @@
         <el-button type="primary" @click="submit">确 定</el-button>
       </span>
     </el-dialog>
+    <set-roles-dialog :roleList="roleList" :dialogVisible="dialogVisible" @handleSubmitRoles="handleSubmitRoles" @handleRoles = "handleRoles" :rolesInfo = "rolesInfo"> </set-roles-dialog>
   </div>
 </template>
 
 <script>
 import { getUsers, updateUserStatus, getUserById, updateUser, deleteUser } from '../../../network/users.js'
 import AddUserForm from './AddUserForm.vue'
+import { getRoles } from '../../../network/power.js'
+import SetRolesDialog from './SetRolesDialog.vue'
 export default {
   components: {
-    AddUserForm
+    AddUserForm,
+    SetRolesDialog
   },
   data () {
     var checkEmail = (rule, value, callback) => {
@@ -115,9 +119,12 @@ export default {
       pagenum: 1,
       pagesize: 2,
       tableData: [],
+      roleList: [],
       total: 0,
       isAddVisible: false,
       isUpdateVisible: false,
+      dialogVisible: false,
+      rolesInfo: {},
       updateFormModel: {
         username: '',
         email: '',
@@ -149,17 +156,28 @@ export default {
         this.$message.err(res.meta.msg)
       }
     },
+    handleSubmitRoles () {
+      this.getUsers()
+      this.dialogVisible = false
+    },
+    handleRoles () {
+      this.dialogVisible = false
+    },
+    async allotRoles (role) {
+      const res = await getRoles()
+      this.roleList = res.data
+      console.log('111', this.roleList)
+      this.rolesInfo = role
+      this.dialogVisible = true
+    },
     async deleteUser (id) {
       const res = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).catch(err => err)
-      console.log(res === 'confirm')
       if (res === 'confirm') {
-        console.log('11112222')
         const result = await deleteUser(id)
-        console.log(result)
         if (result.meta.status === 200) {
           this.getUsers()
           this.$message.success(res.meta.msg)
@@ -172,7 +190,6 @@ export default {
       this.$refs.updateFormRefs.validate(async valid => {
         if (valid) {
           const res = await updateUser(this.updateFormModel.id, this.updateFormModel.email, this.updateFormModel.mobile)
-          console.log(res)
           if (res.meta.status === 200) {
             this.getUsers()
             this.$message.success(res.meta.msg)

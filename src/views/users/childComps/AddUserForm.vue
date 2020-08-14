@@ -96,7 +96,6 @@ export default {
         if (valid) {
           const { username, password, email, mobile } = this.addFormModel
           const res = await addUsers(username, password, email, mobile)
-          console.log('status', res.meta.status)
           if (res.meta.status === 201) {
             this.$emit('getUserList')
             this.$message.success(res.meta.msg)
