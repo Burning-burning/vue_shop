@@ -95,7 +95,6 @@ export default {
       const res = await getRoles()
       if (res.meta.status === 200) {
         this.roleList = res.data
-        console.log(this.roleList)
       } else {
         this.$message.error(res.meta.msg)
       }

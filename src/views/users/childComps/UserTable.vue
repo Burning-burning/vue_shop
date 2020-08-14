@@ -166,7 +166,6 @@ export default {
     async allotRoles (role) {
       const res = await getRoles()
       this.roleList = res.data
-      console.log('111', this.roleList)
       this.rolesInfo = role
       this.dialogVisible = true
     },

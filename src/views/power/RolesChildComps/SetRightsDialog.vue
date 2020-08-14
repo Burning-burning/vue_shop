@@ -61,12 +61,10 @@ export default {
       const arrStr = arr.join(',')
       const res = await allotRights(this.id, arrStr)
       if (res.meta.status === 200) {
-        console.log('11111')
         this.$message.success(res.meta.msg)
       } else {
         this.$message.error(res.meta.msg)
       }
-      console.log(res)
       this.$emit('isSetDialog')
     }
   }
