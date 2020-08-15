@@ -3,12 +3,12 @@
     <breadcrumb :menu="$store.state.menuList[2]" :item="2"></breadcrumb>
     <el-button type="primary" @click = "addCategory">添加分类</el-button>
     <tree-table :data = "categoryList" :columns = "columns" class="tree" :show-index="true" index-text="#" :expand-type="false" :selection-type="false" border :show-row-hover="false">
-      <template slot = "isOk" scope="scope">
+      <template slot = "isOk" slot-scope="scope">
         <i class="el-icon-success" v-if="scope.row.cat_deleted===false" style="color: green"></i>
         <i style="color: red" class="el-icon-error" v-else></i>
 
       </template>
-       <template slot = "order" scope="scoped" >
+       <template slot = "order" slot-scope="scoped" >
         <el-tag type ="primary" v-if="scoped.row.cat_level===0">一级</el-tag>
         <el-tag type="success" v-else-if="scoped.row.cat_level===1">二级</el-tag>
         <el-tag type = "warning" v-else>三级</el-tag>
