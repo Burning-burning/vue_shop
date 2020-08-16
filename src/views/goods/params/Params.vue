@@ -264,14 +264,12 @@ export default {
         this.id = null
       }
       const res = await getData(this.id, this.activeName)
-      console.log(res)
       if (res.meta.status === 200) {
         res.data.forEach(item => {
           item.attr_vals = item.attr_vals ? item.attr_vals.split(',') : []
           item.inputVisible = false
           item.inputValue = ''
         })
-        console.log(res)
 
         if (this.activeName === 'many') {
           this.manyData = res.data

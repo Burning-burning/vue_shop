@@ -76,7 +76,6 @@ export default {
     },
     async handleSubmit () {
       const res = await addcate(this.addFormModel.cat_pid, this.addFormModel.cat_name, this.addFormModel.cat_level)
-      console.log(res)
       if (res.meta.status === 201) {
         this.$message.success(res.meta.msg)
       } else {

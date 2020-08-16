@@ -1,5 +1,6 @@
 <template>
-    <el-breadcrumb separator="/">
+
+      <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>{{menu.authName}}</el-breadcrumb-item>
       <el-breadcrumb-item>{{menu.children[item].authName}}</el-breadcrumb-item>
